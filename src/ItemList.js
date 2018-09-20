@@ -16,19 +16,25 @@ class ItemList extends React.Component {
     let product = this.state.products.find(item => item.id === id);
     product.quantity = product.quantity + 1;
     let total = product.quantity * product.price;
-    product.total = total + product.total;
+
+    product.total = total ;
+    console.log("este es product.total " + product.total + product.name )
+    console.log("este es total" + total);
+
 
     let newProducts = this.state.products.filter(item => item.id !== id);
     newProducts = [...newProducts, product].sort((a, b) => a.id - b.id);
 
     this.setState({
       products: newProducts,
+      total: this.state.total + product.price
     });
   };
 
   render() {
     return (
       <div>
+        <h1>Total: {this.state.total}</h1>
         {this.state.products.map((product, i) => {
           return (
             <div className="tc dib" key={i}>
@@ -39,6 +45,7 @@ class ItemList extends React.Component {
                 price={product.price}
                 img={product.img}
                 quantity={product.quantity}
+                total={product.total}
               />
               <Contador onIncrement={() => this.onIncrementParent(product.id)} value={product.quantity} />
             </div>

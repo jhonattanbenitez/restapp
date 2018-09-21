@@ -6,7 +6,7 @@ class Contador extends React.Component {
       <div>
         <h3>{this.props.value}</h3>
         <input type="button" onClick={this.props.onIncrement} value="+" />
-        {/* <input type="button" onClick={this.decrementar.bind(this)} value="-" /> */}
+        <input type="button" onClick={this.props.onDecrement} value="-" /> 
       </div>
     );
   }

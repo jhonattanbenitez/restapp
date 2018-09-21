@@ -1,6 +1,7 @@
-import React from 'react';
-import Item from './Containers/Item';
-import Contador from './Contador';
+import React from "react";
+import Item from "./Containers/Item";
+import Contador from "./Contador";
+import "./ItemList.css";
 
 class ItemList extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class ItemList extends React.Component {
 
     this.state = {
       products: props.products,
-      total: 0,
+      total: 0
     };
   }
 
@@ -17,10 +18,9 @@ class ItemList extends React.Component {
     product.quantity = product.quantity + 1;
     let total = product.quantity * product.price;
 
-    product.total = total ;
-    console.log("este es product.total " + product.total + product.name )
+    product.total = total;
+    console.log("este es product.total " + product.total + product.name);
     console.log("este es total" + total);
-
 
     let newProducts = this.state.products.filter(item => item.id !== id);
     newProducts = [...newProducts, product].sort((a, b) => a.id - b.id);
@@ -31,13 +31,33 @@ class ItemList extends React.Component {
     });
   };
 
+  onDecrementParent = id => {
+    let product = this.state.products.find(item => item.id === id);
+    if (product.quantity > 0) {
+      product.quantity = product.quantity - 1;
+      let total = product.quantity * product.price;
+
+      product.total = total;
+      console.log("este es product.total " + product.total + product.name);
+      console.log("este es total" + total);
+
+      let newProducts = this.state.products.filter(item => item.id !== id);
+      newProducts = [...newProducts, product].sort((a, b) => a.id - b.id);
+
+      this.setState({
+        products: newProducts,
+        total: this.state.total - product.price
+      });
+    }
+  };
+
   render() {
     return (
       <div>
-        <h1>Total: {this.state.total}</h1>
+        <h1 className="tc">Total: {this.state.total}</h1>
         {this.state.products.map((product, i) => {
           return (
-            <div className="tc dib" key={i}>
+            <div className="tc dib style" key={i}>
               <Item
                 key={i}
                 id={product.id}
@@ -46,8 +66,13 @@ class ItemList extends React.Component {
                 img={product.img}
                 quantity={product.quantity}
                 total={product.total}
+                onIncrement={() => this.onIncrementParent(product.id)}
               />
-              <Contador onIncrement={() => this.onIncrementParent(product.id)} value={product.quantity} />
+              <Contador
+                onIncrement={() => this.onIncrementParent(product.id)}
+                value={product.quantity}
+                onDecrement={() => this.onDecrementParent(product.id)}
+              />
             </div>
           );
         })}

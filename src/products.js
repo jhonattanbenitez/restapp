@@ -8,9 +8,9 @@ export const products = [
     total: 0,
     ingredientes: [
       {
-      maicitos: 200,
-      tocineta: 100,
-      queso: 100,
+      name: 200,
+      unity: 100,
+      id: 100,
       }     
     ]
     
@@ -30,6 +30,13 @@ export const products = [
       queso: 100,
       }     
     ]
+
+    //recorrer productos
+    //verificar quantity > 0 (filter (pro => pro.quantity > 0))
+    //recorrer productos filtrado 
+    //acumIngredientes 
+    //recorrer ingredientes 
+    //verificar si esta en acumIngredientes 
     
 
   },
